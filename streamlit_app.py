@@ -25,7 +25,9 @@ async def render_pydantic(deps_state: AgentState):
             result = sp.pydantic_form(model=test, key="my_model_input")
             if result:
                 logger.info(f"Captured data: {result}")
+                logger.info(f"state before: {deps_state.captured}")
                 deps_state.captured = result.model_dump()
+                logger.info(f"state after: {deps_state.captured}")
                 st.success("Data received successfully!")
                 st.rerun()
 
