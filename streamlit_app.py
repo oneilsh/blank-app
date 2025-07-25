@@ -18,14 +18,14 @@ class AgentStuff():
 
 
 
-async def render_pydantic(deps: AgentStuff):
+async def render_pydantic(deps_state: AgentState):
     with st.chat_message("assistant"):
         with st.container(border = True):
             test = MyModel(name="John Doe", age=30, has_pets=True)
             result = sp.pydantic_form(model=test, key="my_model_input")
             if result:
                 logger.info(f"Captured data: {result}")
-                deps.state.captured = result.model_dump()
+                deps_state.captured = result.model_dump()
                 st.success("Data received successfully!")
                 st.rerun()
 
@@ -36,7 +36,7 @@ agent = Agent('gpt-4o')
 @agent.tool
 async def capture_pydantic_input(ctx: RunContext):
     """Capture user input using Pydantic and render it in a dialog."""
-    await call_render_func('render_pydantic', {"deps": ctx.deps})
+    await call_render_func('render_pydantic', {"deps_state": ctx.deps.state})
     return "A user interface has been rendered in the chat for the user to enter data."
 
 
