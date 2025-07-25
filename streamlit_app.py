@@ -3,18 +3,12 @@ from pydantic_ai import Agent, RunContext
 from opaiui.app import AppConfig,  AgentConfig, AgentState, serve, call_render_func, get_logger
 import streamlit_pydantic as sp
 from pydantic import BaseModel
+from models import MyModel
 
 import dotenv
 dotenv.load_dotenv(override=True)
 
 logger = get_logger()
-
-
-class MyModel(BaseModel):
-    name: str
-    age: int
-    has_pets: bool
-
 
 
 class AgentStuff():
@@ -31,7 +25,7 @@ async def render_pydantic(deps: AgentStuff):
             result = sp.pydantic_form(model=test, key="my_model_input")
             if result:
                 logger.info(f"Captured data: {result}")
-                deps.state.captured = result
+                deps.state.captured = result.model_dump()
                 st.success("Data received successfully!")
                 st.rerun()
 
