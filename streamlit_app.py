@@ -21,7 +21,8 @@ class AgentStuff():
 async def render_pydantic(deps_state: AgentState, input: MyModel):
     with st.chat_message("assistant"):
         with st.container(border = True):
-            result = sp.pydantic_form(model=input, key="my_model_input")
+            # result = sp.pydantic_form(model=input, key="my_model_input")
+            result = sp.pydantic_form(model=input)
             if result:
                 logger.info(f"Captured data: {result}")
                 logger.info(f"state before: {deps_state.captured}")
