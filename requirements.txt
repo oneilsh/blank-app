@@ -1,3 +1,4 @@
 streamlit
 opaiui
 python-dotenv
+streamlit-pydantic @ git+https://github.com/lukasmasuch/streamlit-pydantic@main
