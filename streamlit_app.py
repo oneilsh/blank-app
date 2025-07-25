@@ -1,6 +1,18 @@
 import streamlit as st
+from pydantic_ai import Agent, RunContext
+from opaiui.app import AppConfig,  AgentConfig, AgentState, serve, call_render_func
 
-st.title("🎈 My new APOOOO")
-st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
-)
+
+
+agent = Agent('gpt-4o')
+
+app_config = AppConfig()
+
+agent_configs = {
+    "Agent": AgentConfig(
+        agent = agent,
+        deps = None,
+    )
+}
+
+serve(app_config, agent_configs)
